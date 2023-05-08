@@ -1,0 +1,1 @@
+FROM ghcr.io/electrolyte-orb/executable:latest
