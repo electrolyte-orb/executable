@@ -81,7 +81,7 @@ jobs:
       - name: Update the `back4app-nextjs-server` branch
         run: |
           rm Dockerfile
-          echo "${{ fromJSON(env.DOCKER_METADATA_OUTPUT_JSON).tags }}"
+          echo "${{ fromJSON(env.DOCKER_METADATA_OUTPUT_JSON).tags[1] }}"
 
       # Sign the resulting Docker image digest except on PRs.
       # This will only write to the public Rekor transparency log when the Docker
