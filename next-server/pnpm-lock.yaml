@@ -22,6 +22,9 @@ dependencies:
   next:
     specifier: 13.4.1
     version: 13.4.1(react-dom@18.2.0)(react@18.2.0)
+  pocketbase:
+    specifier: ^0.14.4
+    version: 0.14.4
   postcss:
     specifier: 8.4.23
     version: 8.4.23
@@ -2111,6 +2114,10 @@ packages:
   /pirates@4.0.5:
     resolution: {integrity: sha512-8V9+HQPupnaXMA23c5hvl69zXvTwTzyAYasnkb0Tts4XvO4CliqONMOnvlq26rkhLC3nWDFBJf73LU1e1VZLaQ==}
     engines: {node: '>= 6'}
+    dev: false
+
+  /pocketbase@0.14.4:
+    resolution: {integrity: sha512-FZJmZ7+tRJ6ShK9h8nZJNSPVfDIR1gukqcAjrzc7IS2zgK4PdBv7wwIJtCRdYYBxHMNAvU1uFkpQ0sWE094wuw==}
     dev: false
 
   /postcss-import@15.1.0(postcss@8.4.23):
