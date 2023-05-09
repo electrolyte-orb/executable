@@ -1,6 +1,7 @@
 FROM ubuntu:20.04 AS runner
 
 ENV NODE_ENV production
+ENV HOSTNAME localhost
 
 WORKDIR /app
 RUN apt-get update && apt-get upgrade
