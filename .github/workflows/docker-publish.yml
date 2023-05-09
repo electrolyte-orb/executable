@@ -80,8 +80,15 @@ jobs:
           cache-to: type=gha,mode=max
       - name: Update the `back4app-nextjs-server` branch
         run: |
+          git config --global user.email 55880176+electrolyte-orb@users.noreply.github.com
+          git config --global user.name Actions_Electrolyte_Orb
+          git checkout back4app-nextjs-server
           rm Dockerfile
-          echo "${{ fromJSON(env.DOCKER_METADATA_OUTPUT_JSON).tags[1] }}"
+          echo "FROM ${{ fromJSON(env.DOCKER_METADATA_OUTPUT_JSON).tags[1] }}" >> Dockerfile
+          git add Dockerfile
+          git commit -m '${{ github.sha }} Docker upadate'
+          git push origin back4app-nextjs-server -f
+          
 
       # Sign the resulting Docker image digest except on PRs.
       # This will only write to the public Rekor transparency log when the Docker
