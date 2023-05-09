@@ -78,13 +78,15 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-
+      - name: Checkout `back4app-nextjs-server` brach 
+        uses: actions/checkout@v3
+        with:
+          ref: back4app-nextjs-server
+        
       - name: Update the `back4app-nextjs-server` branch
         run: |
-          git config --global user.email 55880176+electrolyte-orb@users.noreply.github.com
-          git config --global user.name Actions_Electrolyte_Orb
-          
-          git checkout back4app-nextjs-server
+          git config user.email github-actions@github.com
+          git config user.name github-actions
           
           rm Dockerfile
           echo "FROM ${{ fromJSON(env.DOCKER_METADATA_OUTPUT_JSON).tags[1] }}" >> Dockerfile
