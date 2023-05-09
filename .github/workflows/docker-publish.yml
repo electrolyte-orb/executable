@@ -50,7 +50,7 @@ jobs:
       - name: Build Nextjs application
         run: |
           cd next-server
-          pnpm run install --frozen-lockfile
+          pnpm install --frozen-lockfile
           pnpm run build
           cd ..
       # Install the cosign tool except on PR
