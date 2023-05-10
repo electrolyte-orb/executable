@@ -17,6 +17,7 @@ COPY --chown=nextjs:nodejs pocketbase/pocketbase ./
 COPY --chown=nextjs:nodejs next-server/public public
 COPY --chown=nextjs:nodejs next-server/.next/standalone ./
 COPY --chown=nextjs:nodejs next-server/.next/static .next/static
+COPY --chown=nextjs:nodejs ./docker-run.sh ./
 
 USER nextjs
 EXPOSE 3000
