@@ -1,1 +1,1 @@
-node server.js & ./pocketbase serve
+./pocketbase serve & node server.js
