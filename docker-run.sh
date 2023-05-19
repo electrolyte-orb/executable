@@ -1,1 +1,0 @@
-./pocketbase serve & node server.js

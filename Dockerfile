@@ -17,7 +17,10 @@ COPY --chown=nextjs:nodejs pocketbase/pocketbase ./
 COPY --chown=nextjs:nodejs next-server/public public
 COPY --chown=nextjs:nodejs next-server/.next/standalone ./
 COPY --chown=nextjs:nodejs next-server/.next/static .next/static
-COPY --chown=nextjs:nodejs ./docker-run.sh ./
+COPY --chown=nextjs:nodejs run/* ./
+COPY --chown=nextjs:nodejs pb_data ./pb_data
+
+# RUN chmod -R a+rwx ./pb_data
 
 USER nextjs
 EXPOSE 3000

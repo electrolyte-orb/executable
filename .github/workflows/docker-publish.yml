@@ -54,12 +54,13 @@ jobs:
           pnpm run build
           cd ..
         
-      - name: Download and unzip Pocketbase
+      - name: Download and unzip Pocketbase and `pb_data`
         run: |
           mkdir pocketbase && cd pocketbase
           curl -fSsL https://github.com/pocketbase/pocketbase/releases/download/v0.15.3/pocketbase_0.15.3_linux_amd64.zip -o pb.zip
           unzip pb.zip
           cd ..
+          unzip pb_data.zip
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
       - name: Install cosign
@@ -121,7 +122,7 @@ jobs:
           echo "FROM ${{ fromJSON(env.DOCKER_METADATA_OUTPUT_JSON).tags[1] }}" >> Dockerfile
           
           git add Dockerfile
-          git commit -m '${{ github.sha }} Docker upadate'
+          git commit -m '${{ github.sha }} Docker update'
           git push origin back4app-nextjs-server -f
           
 
