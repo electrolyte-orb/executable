@@ -10,7 +10,7 @@ export default async function Home() {
 	});
 	return (
 		<main className="p-8">
-			<h1 className="text-4xl font-medium text-pink-500">Hello world</h1>
+			<h1 className="text-2xl font-bold leading-tight">Exec Services</h1>
 			<InitDialog />
 			<div>
 				{results.map((result, index) => (

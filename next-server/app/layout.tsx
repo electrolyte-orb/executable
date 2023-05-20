@@ -1,7 +1,7 @@
 import './globals.css';
-import { Rajdhani } from 'next/font/google';
+import { Plus_Jakarta_Sans } from 'next/font/google';
 
-const rajdhani = Rajdhani({
+const myFont = Plus_Jakarta_Sans({
 	subsets: ['latin'],
 	weight: ['300', '400', '500', '600', '700'],
 });
@@ -19,7 +19,7 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body
-				className={rajdhani.className + ' bg-black text-gray-200 font-medium'}
+				className={myFont.className + ' bg-black text-gray-300 leading-normal'}
 			>
 				{children}
 			</body>
