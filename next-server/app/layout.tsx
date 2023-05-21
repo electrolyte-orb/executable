@@ -1,9 +1,16 @@
 import './globals.css';
-import { Plus_Jakarta_Sans } from 'next/font/google';
+import localFont from 'next/font/local';
 
-const myFont = Plus_Jakarta_Sans({
-	subsets: ['latin'],
-	weight: ['300', '400', '500', '600', '700'],
+const myFont = localFont({
+	src: [
+		{
+			path: '../node_modules/inter-ui/Inter (web latin)/Inter.var.woff2',
+		},
+		{
+			path: '../node_modules/inter-ui/Inter (web latin)/Inter-italic.var.woff2',
+			style: 'italic',
+		},
+	],
 });
 
 export const metadata = {
@@ -19,7 +26,9 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body
-				className={myFont.className + ' bg-black text-gray-300 leading-normal'}
+				className={
+					myFont.className + ' bg-black text-neutral-400 leading-tight'
+				}
 			>
 				{children}
 			</body>

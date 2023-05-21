@@ -31,6 +31,9 @@ dependencies:
   iconoir-react:
     specifier: ^6.8.0
     version: 6.8.0(react@18.2.0)
+  inter-ui:
+    specifier: ^3.19.3
+    version: 3.19.3
   next:
     specifier: 13.4.1
     version: 13.4.1(react-dom@18.2.0)(react@18.2.0)
@@ -1860,6 +1863,10 @@ packages:
 
   /inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
+    dev: false
+
+  /inter-ui@3.19.3:
+    resolution: {integrity: sha512-5FG9fjuYOXocIfjzcCBhICL5cpvwEetseL3FU6tP3d6Bn7g8wODhB+I9RNGRTizCT7CUG4GOK54OPxqq3msQgg==}
     dev: false
 
   /internal-slot@1.0.5:

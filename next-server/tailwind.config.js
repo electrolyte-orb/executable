@@ -34,9 +34,9 @@ module.exports = {
 				},
 			},
 			animation: {
-				overlayShow: 'overlayShow 200ms ease-out-back',
-				contentShow: 'contentShow 200ms ease-out-back forwards',
-				contentHide: 'contentHide 200ms ease-out-back forwards',
+				overlayShow: 'overlayShow 200ms ease-out',
+				contentShow: 'contentShow 200ms ease-out-expo forwards',
+				contentHide: 'contentHide 200ms ease-out forwards',
 			},
 		},
 	},
