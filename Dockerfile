@@ -13,14 +13,11 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -&&\
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-COPY --chown=nextjs:nodejs pocketbase/pocketbase ./
 COPY --chown=nextjs:nodejs next-server/public public
 COPY --chown=nextjs:nodejs next-server/.next/standalone ./
 COPY --chown=nextjs:nodejs next-server/.next/static .next/static
 COPY --chown=nextjs:nodejs run/* ./
-COPY --chown=nextjs:nodejs pb_data ./pb_data
 
-# RUN chmod -R a+rwx ./pb_data
 
 USER nextjs
 EXPOSE 3000

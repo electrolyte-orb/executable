@@ -53,14 +53,6 @@ jobs:
           pnpm install --frozen-lockfile
           pnpm run build
           cd ..
-        
-      - name: Download and unzip Pocketbase and `pb_data`
-        run: |
-          mkdir pocketbase && cd pocketbase
-          curl -fSsL https://github.com/pocketbase/pocketbase/releases/download/v0.15.3/pocketbase_0.15.3_linux_amd64.zip -o pb.zip
-          unzip pb.zip
-          cd ..
-          unzip pb_data.zip
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
       - name: Install cosign
