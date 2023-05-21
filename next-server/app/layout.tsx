@@ -1,5 +1,8 @@
 import './globals.css';
 import localFont from 'next/font/local';
+import SupabaseProvider from './supabase-provider';
+import { createServerComponentSupabaseClient } from '@supabase/auth-helpers-nextjs';
+import { headers, cookies } from 'next/headers';
 
 const myFont = localFont({
 	src: [
@@ -13,16 +16,20 @@ const myFont = localFont({
 	],
 });
 
-export const metadata = {
-	title: 'Executable',
-	description: 'Executable',
-};
-
-export default function RootLayout({
+export default async function RootLayout({
 	children,
 }: {
 	children: React.ReactNode;
 }) {
+	const supabase = createServerComponentSupabaseClient({
+		headers,
+		cookies,
+	});
+
+	const {
+		data: { session },
+	} = await supabase.auth.getSession();
+
 	return (
 		<html lang="en">
 			<body
@@ -30,7 +37,7 @@ export default function RootLayout({
 					myFont.className + ' bg-black text-neutral-400 leading-tight'
 				}
 			>
-				{children}
+				<SupabaseProvider session={session}>{children}</SupabaseProvider>
 			</body>
 		</html>
 	);
