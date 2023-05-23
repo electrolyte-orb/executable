@@ -5,7 +5,7 @@ import { SignOut } from './components';
 import type { Database } from '@/types/database.types';
 
 export const revalidate = 0;
-export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 export const metadata = {
 	title: 'Executable',
