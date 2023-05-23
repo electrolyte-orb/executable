@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import {
 	Session,
 	createBrowserSupabaseClient,
@@ -8,6 +8,7 @@ import {
 
 import type { SupabaseClient } from '@supabase/auth-helpers-nextjs';
 import type { Database } from '@/types/database.types';
+import { useRouter } from 'next/navigation';
 
 type MaybeSession = Session | null;
 
@@ -26,6 +27,24 @@ export default function SupabaseProvider({
 	session: MaybeSession;
 }) {
 	const [supabase] = useState(() => createBrowserSupabaseClient());
+	const router = useRouter();
+
+	useEffect(() => {
+		const {
+			data: { subscription },
+		} = supabase.auth.onAuthStateChange((ev, clientSession) => {
+			if (
+				ev === 'INITIAL_SESSION' &&
+				// make sure the server and client token are mismatched, i.e. client need a refresh.
+				clientSession?.access_token !== session?.access_token
+			) {
+				router.replace('/');
+				console.log('ROUTER REPLACE');
+			}
+		});
+
+		return subscription.unsubscribe;
+	}, [supabase, router, session]);
 
 	return (
 		<Context.Provider value={{ supabase, session }}>

@@ -1,18 +1,24 @@
 'use client';
 import * as Dialog from '@radix-ui/react-dialog';
 import { Cancel } from 'iconoir-react';
-import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs';
+import { useSupabase } from './supabase-provider';
 import { useState } from 'react';
 import { Button } from './components';
+
 export default function InitDialog() {
-	const [supabase] = useState(() => createBrowserSupabaseClient());
+	const { supabase } = useSupabase();
 	const [authError, setAuthError] = useState<Error | null>(null);
 
 	async function handleSubmit() {
 		const { error } = await supabase.auth.signInWithOAuth({
 			provider: 'google',
+			options: {
+				redirectTo: window.location.href,
+			},
 		});
-		if (error) setAuthError(error);
+		if (error) {
+			setAuthError(error);
+		}
 	}
 
 	return (

@@ -5,6 +5,7 @@ import { SignOut } from './components';
 import type { Database } from '@/types/database.types';
 
 export const revalidate = 0;
+export const dynamic = 'force-dynamic';
 
 export const metadata = {
 	title: 'Executable',
@@ -18,9 +19,9 @@ export default async function Home() {
 	});
 
 	const {
-		data: { session: userData },
+		data: { user: userData },
 		error: userError,
-	} = await supabase.auth.getSession();
+	} = await supabase.auth.getUser();
 
 	const result = await supabase.from('chats').select('*');
 
@@ -29,10 +30,10 @@ export default async function Home() {
 			<h1 className="text-2xl font-bold leading-tight text-white text-center">
 				Exec Services
 			</h1>
-			{userData?.user && userError === null ? (
+			{userData && userError === null ? (
 				<div className="mt-2 border-t border-neutral-700 py-4">
 					<h3 className="text-xl text-white leading-tight font-bold">
-						Welcome, {userData.user.user_metadata.full_name}
+						Welcome, {userData.user_metadata.full_name}
 					</h3>
 					<SignOut />
 				</div>
