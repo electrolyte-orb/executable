@@ -3,11 +3,9 @@ import { headers, cookies } from 'next/headers';
 import InitDialog from './InitDialog';
 import { SignOut } from './components';
 import type { Database } from '@/types/database.types';
-import type { NextConfig } from 'next';
+
 export const revalidate = 0;
 export const dynamic = 'force-dynamic';
-
-export const runtime = 'edge';
 
 export const metadata = {
 	title: 'Executable',
