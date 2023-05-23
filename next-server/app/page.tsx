@@ -7,9 +7,7 @@ import type { NextConfig } from 'next';
 export const revalidate = 0;
 export const dynamic = 'force-dynamic';
 
-export const config: NextConfig = {
-	runtime: 'edge',
-};
+export const runtime = 'edge';
 
 export const metadata = {
 	title: 'Executable',
