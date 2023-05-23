@@ -43,12 +43,17 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('next-server/package-lock.json') }}-
 
-      - name: Build Nextjs application
-        env:
-          NEXT_PUBLIC_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL }}
-          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ vars.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+      - name: Install dependencies
         run: |
           cd next-server
           pnpm install --frozen-lockfile
-          pnpm run build
-          cd ..
+
+      - name: Build and deploy to Netlify
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ vars.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN}}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+          cd next-server
+          pnpm netlify deploy --build --context production --prod
