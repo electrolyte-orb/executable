@@ -8,7 +8,7 @@ export const revalidate = 0;
 export const dynamic = 'force-dynamic';
 
 export const config: NextConfig = {
-	runtime: 'experimental-edge',
+	runtime: 'edge',
 };
 
 export const metadata = {
