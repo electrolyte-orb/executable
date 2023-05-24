@@ -38,8 +38,8 @@ export default function SupabaseProvider({
 				// make sure the server and client token are mismatched, i.e. client need a refresh.
 				clientSession?.access_token !== session?.access_token
 			) {
-				router.replace('/');
-				console.log('ROUTER REPLACE');
+				router.refresh();
+				console.log('ROUTER REFRESH');
 			}
 		});
 
