@@ -8,7 +8,7 @@ import {
 
 import type { SupabaseClient } from '@supabase/auth-helpers-nextjs';
 import type { Database } from '@/types/database.types';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 type MaybeSession = Session | null;
 
@@ -27,6 +27,8 @@ export default function SupabaseProvider({
 	session: MaybeSession;
 }) {
 	const [supabase] = useState(() => createBrowserSupabaseClient());
+	const [refreshing, setRefreshing] = useState(false);
+	const pathname = usePathname();
 	const router = useRouter();
 
 	useEffect(() => {
@@ -39,17 +41,32 @@ export default function SupabaseProvider({
 				// make sure the server and client token are mismatched, i.e. client need a refresh.
 				clientSession?.access_token !== session?.access_token
 			) {
+				setRefreshing(true);
 				router.replace('/');
-				console.log('ROUTER REPLACE');
+				router.refresh();
 			}
 		});
 
-		return subscription.unsubscribe;
+		return () => {
+			console.log('[event router shift]');
+			subscription.unsubscribe();
+			setRefreshing(false);
+		};
 	}, [supabase, router, session]);
+
+	useEffect(() => {
+		setRefreshing(false);
+	}, [pathname]);
 
 	return (
 		<Context.Provider value={{ supabase, session }}>
-			<>{children}</>
+			<>
+				{refreshing && (
+					<div className="fixed h-1 w-screen top-0 left-0 bg-gradient-to-r bg-blue-600 origin-left animate-fillWidth"></div>
+				)}
+
+				{children}
+			</>
 		</Context.Provider>
 	);
 }

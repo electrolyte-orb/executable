@@ -8,6 +8,10 @@ module.exports = {
 	theme: {
 		extend: {
 			keyframes: {
+				fillWidth: {
+					from: { transform: 'scaleX(0)' },
+					to: { transform: 'scaleX(1)' },
+				},
 				overlayShow: {
 					from: { opacity: 0 },
 					to: { opacity: 1 },
@@ -37,6 +41,7 @@ module.exports = {
 				overlayShow: 'overlayShow 200ms ease-out',
 				contentShow: 'contentShow 200ms ease-out-expo forwards',
 				contentHide: 'contentHide 200ms ease-out forwards',
+				fillWidth: 'fillWidth 5s ease-in-out-expo forwards',
 			},
 		},
 	},
