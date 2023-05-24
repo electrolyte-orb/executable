@@ -33,13 +33,14 @@ export default function SupabaseProvider({
 		const {
 			data: { subscription },
 		} = supabase.auth.onAuthStateChange((ev, clientSession) => {
+			console.log({ ev, clientSession });
 			if (
 				ev === 'INITIAL_SESSION' &&
 				// make sure the server and client token are mismatched, i.e. client need a refresh.
 				clientSession?.access_token !== session?.access_token
 			) {
-				router.refresh();
-				console.log('ROUTER REFRESH');
+				router.replace('/');
+				console.log('ROUTER REPLACE');
 			}
 		});
 
