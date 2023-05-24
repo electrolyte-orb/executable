@@ -6,6 +6,7 @@ import type { Database } from '@/types/database.types';
 
 export const revalidate = 0;
 export const runtime = 'edge';
+export const dynamic = 'force-dynamic';
 
 export const metadata = {
 	title: 'Executable',
