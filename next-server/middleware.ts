@@ -8,9 +8,7 @@ export async function middleware(req: NextRequest) {
 	const res = NextResponse.next();
 	const supabase = createMiddlewareSupabaseClient<Database>({ req, res });
 	try {
-		await supabase.auth.getSession().catch(async () => {
-			await supabase.auth.refreshSession();
-		});
+		await supabase.auth.getSession().catch();
 	} catch (err) {}
 	return res;
 }
