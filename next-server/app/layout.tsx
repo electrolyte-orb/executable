@@ -3,6 +3,9 @@ import localFont from 'next/font/local';
 import SupabaseProvider from './supabase-provider';
 import { createServerComponentSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import { headers, cookies } from 'next/headers';
+import IconoirProvider from './iconoir-context';
+
+export const runtime = 'edge';
 
 const myFont = localFont({
 	src: [
@@ -37,7 +40,17 @@ export default async function RootLayout({
 					myFont.className + ' bg-black text-neutral-400 leading-tight'
 				}
 			>
-				<SupabaseProvider session={session}>{children}</SupabaseProvider>
+				<SupabaseProvider session={session}>
+					<IconoirProvider
+						iconProps={{
+							width: '1.5rem',
+							height: '1.5rem',
+							display: 'inline-block',
+						}}
+					>
+						{children}
+					</IconoirProvider>
+				</SupabaseProvider>
 			</body>
 		</html>
 	);

@@ -1,6 +1,12 @@
 'use client';
 import * as Dialog from '@radix-ui/react-dialog';
-import { Cancel } from 'iconoir-react';
+import {
+	Cancel,
+	Google,
+	ArrowRight,
+	ArrowRightCircle,
+	NavArrowRight,
+} from 'iconoir-react';
 import { useSupabase } from './supabase-provider';
 import { useState } from 'react';
 import { Button } from './components';
@@ -24,7 +30,10 @@ export default function InitDialog() {
 	return (
 		<Dialog.Root>
 			<Dialog.Trigger asChild>
-				<Button variant="primary">Login</Button>
+				<Button className="group mt-4" size="large" variant="primary">
+					Login
+					<NavArrowRight className="ml-2 group-hover:translate-x-2 transition ease-[easeOutCubic]" />
+				</Button>
 			</Dialog.Trigger>
 
 			<Dialog.Portal>
@@ -39,14 +48,17 @@ export default function InitDialog() {
 					<Dialog.Title className="font-bold text-lg text-white pb-6 border-b border-neutral-700">
 						Login as
 					</Dialog.Title>
-					<button
+					<Button
 						onClick={() => {
 							handleSubmit();
 						}}
-						className="ease-[easeOutCirc] duration-100 text-sm border border-neutral-700 transition hover:bg-neutral-700 active:scale-95 w-full font-medium mt-4 px-12 py-3 bg-neutral-800 text-white rounded-md leading-5"
+						variant="secondary"
+						size="large-fw"
+						className="mt-4"
 					>
+						<Google className="mr-2" />
 						Login with Google
-					</button>
+					</Button>
 					{authError && (
 						<code className="text-xs leading-3 block text-neutral-500">
 							{JSON.stringify(authError)}
