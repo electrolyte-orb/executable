@@ -1,15 +1,9 @@
 'use client';
 import * as Dialog from '@radix-ui/react-dialog';
-import {
-	Cancel,
-	Google,
-	ArrowRight,
-	ArrowRightCircle,
-	NavArrowRight,
-} from 'iconoir-react';
-import { useSupabase } from './supabase-provider';
+import { Cancel, Google, NavArrowRight } from 'iconoir-react';
+import { useSupabase } from '@/app/supabase-provider';
 import { useState } from 'react';
-import { Button } from './components';
+import { Button } from '@/app/components';
 
 export default function InitDialog() {
 	const { supabase } = useSupabase();

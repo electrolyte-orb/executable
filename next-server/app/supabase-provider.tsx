@@ -35,7 +35,6 @@ export default function SupabaseProvider({
 		const {
 			data: { subscription },
 		} = supabase.auth.onAuthStateChange((ev, clientSession) => {
-			console.log({ ev, clientSession });
 			if (
 				ev === 'INITIAL_SESSION' &&
 				// make sure the server and client token are mismatched, i.e. client need a refresh.

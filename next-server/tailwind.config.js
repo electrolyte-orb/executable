@@ -57,12 +57,23 @@ module.exports = {
 						transform: 'translate(-50%, -40%) scale(0.9)',
 					},
 				},
+				contentShowX: {
+					from: {
+						opacity: 0,
+						transform: 'translateX(100%)',
+					},
+					to: {
+						opacity: 1,
+						transform: 'translateX(0%)',
+					},
+				},
 			},
 			animation: {
 				overlayShow: 'overlayShow 200ms ease-out',
 				contentShow: 'contentShow 200ms ease-out-expo forwards',
+				contentShowX: 'contentShowX 2000ms ease-out-expo forwards',
 				contentHide: 'contentHide 200ms ease-out forwards',
-				fillWidth: 'fillWidth 5s ease-in-out-expo forwards',
+				fillWidth: 'fillWidth 3s ease-in-out-expo forwards',
 				subtleMotion: 'subtleMotion 6s ease-in-out-sine infinite alternate',
 				subtleMotion2: 'subtleMotion2 6s ease-in-out-sine infinite alternate',
 				subtleMotion3: 'subtleMotion3 6s ease-in-out-sine infinite alternate',
