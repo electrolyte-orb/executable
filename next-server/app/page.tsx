@@ -1,5 +1,5 @@
 'use client';
-import { Main } from './components';
+import { Main } from '../components';
 import {
 	ArrowRight,
 	ChatBubble,

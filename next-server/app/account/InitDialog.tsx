@@ -3,7 +3,7 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { Cancel, Google, NavArrowRight } from 'iconoir-react';
 import { useSupabase } from '@/app/supabase-provider';
 import { useState } from 'react';
-import { Button } from '@/app/components';
+import { Button } from '@/components';
 
 export default function InitDialog() {
 	const { supabase } = useSupabase();

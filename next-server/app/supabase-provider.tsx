@@ -1,6 +1,12 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import {
+	createContext,
+	useContext,
+	useEffect,
+	useState,
+	useTransition,
+} from 'react';
 import {
 	Session,
 	createBrowserSupabaseClient,
@@ -8,7 +14,8 @@ import {
 
 import type { SupabaseClient } from '@supabase/auth-helpers-nextjs';
 import type { Database } from '@/types/database.types';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import { Loader } from '@/components';
 
 type MaybeSession = Session | null;
 
@@ -27,8 +34,7 @@ export default function SupabaseProvider({
 	session: MaybeSession;
 }) {
 	const [supabase] = useState(() => createBrowserSupabaseClient());
-	const [refreshing, setRefreshing] = useState(false);
-	const pathname = usePathname();
+	const [refreshing, startTransition] = useTransition();
 	const router = useRouter();
 
 	useEffect(() => {
@@ -40,30 +46,34 @@ export default function SupabaseProvider({
 				// make sure the server and client token are mismatched, i.e. client need a refresh.
 				clientSession?.access_token !== session?.access_token
 			) {
-				setRefreshing(true);
-				router.replace('/');
-				router.refresh();
+				startTransition(() => {
+					router.replace('/account');
+					router.refresh();
+				});
 			}
 		});
 
 		return () => {
-			console.log('[event router shift]');
 			subscription.unsubscribe();
-			setRefreshing(false);
 		};
 	}, [supabase, router, session]);
 
 	useEffect(() => {
-		setRefreshing(false);
-	}, [pathname]);
-
+		console.log('REFRESHING', refreshing);
+	}, [refreshing]);
 	return (
 		<Context.Provider value={{ supabase, session }}>
 			<>
-				{refreshing && (
-					<div className="fixed h-1 w-screen top-0 left-0 bg-gradient-to-r bg-blue-600 origin-left animate-fillWidth"></div>
-				)}
-
+				{refreshing && <Loader />}
+				<button
+					onClick={() => {
+						startTransition(() => {
+							router.refresh();
+						});
+					}}
+				>
+					Loader the page
+				</button>
 				{children}
 			</>
 		</Context.Provider>

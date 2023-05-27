@@ -1,3 +1,4 @@
+import { Loader } from '@/components';
 export default function Loading() {
-	return <div className="text-white font-bold">Loading...</div>;
+	return <Loader />;
 }

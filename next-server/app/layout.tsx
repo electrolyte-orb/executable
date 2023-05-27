@@ -1,10 +1,15 @@
+// styles and fonts
 import './globals.css';
 import localFont from 'next/font/local';
+// supabase
+import supabaseClient from '@/utils/supabase-server';
+// Providers
 import SupabaseProvider from './supabase-provider';
-import { createServerComponentSupabaseClient } from '@supabase/auth-helpers-nextjs';
-import { headers, cookies } from 'next/headers';
 import IconoirProvider from './iconoir-context';
-import { Navbar } from './components';
+// components
+import { Navbar } from '@/components';
+
+export const runtime = 'edge';
 
 const myFont = localFont({
 	src: [
@@ -23,10 +28,7 @@ export default async function RootLayout({
 }: {
 	children: React.ReactNode;
 }) {
-	const supabase = createServerComponentSupabaseClient({
-		headers,
-		cookies,
-	});
+	const supabase = supabaseClient();
 
 	const {
 		data: { session },

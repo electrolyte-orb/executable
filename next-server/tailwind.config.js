@@ -8,27 +8,6 @@ module.exports = {
 	theme: {
 		extend: {
 			keyframes: {
-				subtleMotion: {
-					'0%': { transform: 'translate(-1px, 1px)' },
-					'25%': { transform: 'translate(0px, 1px)' },
-					'50%': { transform: 'translate(1px, -1px)' },
-					'75%': { transform: 'translate(-1px, 2px)' },
-					'100%': { transform: 'translate(1px, 1px)' },
-				},
-				subtleMotion2: {
-					'0%': { transform: 'translate(10%, 10%)' },
-					'25%': { transform: 'translate(-10%, -5%)' },
-					'50%': { transform: 'translate(-10%, 0%)' },
-					'75%': { transform: 'translate(5%, 10%)' },
-					'100%': { transform: 'translate(-8, 8%)' },
-				},
-				subtleMotion3: {
-					'0%': { transform: 'translate(1%, 1%)' },
-					'25%': { transform: 'translate(-1%, -0.5%)' },
-					'50%': { transform: 'translate(-1%, 0%)' },
-					'75%': { transform: 'translate(0.5%, 1%)' },
-					'100%': { transform: 'translate(-0.8, 0.8%)' },
-				},
 				fillWidth: {
 					from: { transform: 'scaleX(0)' },
 					to: { transform: 'scaleX(1)' },
@@ -73,10 +52,7 @@ module.exports = {
 				contentShow: 'contentShow 200ms ease-out-expo forwards',
 				contentShowX: 'contentShowX 2000ms ease-out-expo forwards',
 				contentHide: 'contentHide 200ms ease-out forwards',
-				fillWidth: 'fillWidth 3s ease-in-out-expo forwards',
-				subtleMotion: 'subtleMotion 6s ease-in-out-sine infinite alternate',
-				subtleMotion2: 'subtleMotion2 6s ease-in-out-sine infinite alternate',
-				subtleMotion3: 'subtleMotion3 6s ease-in-out-sine infinite alternate',
+				fillWidth: 'fillWidth 3s ease-out-expo forwards',
 			},
 		},
 	},

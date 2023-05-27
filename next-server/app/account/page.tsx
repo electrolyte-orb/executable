@@ -1,45 +1,26 @@
-import { createServerComponentSupabaseClient } from '@supabase/auth-helpers-nextjs';
-import { headers, cookies } from 'next/headers';
-import InitDialog from './InitDialog';
-import { SignOut, Main } from '@/app/components';
-import type { Database } from '@/types/database.types';
-export const revalidate = 0;
+import LoggedIn from './LoggedIn';
+import NewUser from './NewUser';
+import supabaseClient from '@/utils/supabase-server';
+
 export const runtime = 'edge';
+export const revalidate = 0;
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
-	title: 'Executable',
-	description: 'Executable',
+	title: 'Account Management | Executable',
+	description: 'Account Management page of Executable',
 };
 
-export default async function Page() {
-	const supabase = createServerComponentSupabaseClient<Database>({
-		headers,
-		cookies,
-	});
-
+export default async function AccountLayout() {
+	const supabase = supabaseClient();
 	const {
-		data: { user: userData },
+		data: { session },
 		error: userError,
-	} = await supabase.auth.getUser();
+	} = await supabase.auth.getSession();
 
-	return (
-		<Main>
-			{userData && userError === null ? (
-				<div className="mt-2 border-t border-neutral-700 py-4">
-					<h3 className="text-lg text-white leading-tight tracking-tight">
-						Welcome,{' '}
-						<span className="text-blue-500">
-							{userData.user_metadata.full_name}.
-						</span>{' '}
-						<span className="text-neutral-500">
-							Today you look smart {' (⌐■_■) '}
-						</span>
-					</h3>
-
-					<SignOut />
-				</div>
-			) : (
-				<InitDialog />
-			)}
-		</Main>
+	return session && userError === null ? (
+		<LoggedIn session={session} />
+	) : (
+		<NewUser />
 	);
 }
