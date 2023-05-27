@@ -45,7 +45,7 @@ export default async function RootLayout({
 						iconProps={{
 							width: '1.5rem',
 							height: '1.5rem',
-							display: 'inline-block',
+							style: { display: 'inline-block' },
 						}}
 					>
 						{children}
