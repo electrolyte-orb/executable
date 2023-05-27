@@ -20,6 +20,8 @@ export default function Page() {
 	const heroSectionRef = useRef<HTMLElement>(null);
 	const videoRef = useRef<HTMLVideoElement>(null);
 	const scrollRef = useRef<HTMLDivElement>(null);
+	const getStartedRef = useRef<HTMLDivElement>(null);
+	const linkRef = useRef<HTMLAnchorElement>(null);
 
 	useEffect(() => {
 		// scroll behaviour
@@ -42,21 +44,20 @@ export default function Page() {
 			},
 			{ threshold: 1 }
 		);
-		if (heroSection) io.observe(heroSection);
+		if (heroSection && scrollIndicator) io.observe(heroSection);
 
 		// video play
-
+		const linkEl = linkRef.current!;
 		const video = videoRef.current!;
-		const videoIO = new IntersectionObserver(
+		const button = getStartedRef.current!;
+
+		const linkIO = new IntersectionObserver(
 			(entry, observer) => {
 				entry.forEach((observation) => {
 					if (observation.isIntersecting) {
-						videoRef.current?.play();
-						const buttonGetStarted =
-							document.getElementById('button_get_started')!;
-
-						buttonGetStarted?.classList.add('animate-contentShowX');
-						buttonGetStarted.style.visibility = 'visible';
+						video.play();
+						button?.classList.add('animate-contentShowX');
+						button.style.visibility = 'visible';
 						observer.disconnect();
 					}
 				});
@@ -64,7 +65,7 @@ export default function Page() {
 			{ threshold: 1 }
 		);
 
-		if (video) videoIO.observe(video);
+		if (linkEl && video && button) linkIO.observe(linkEl);
 
 		// TODO: fadein animations
 
@@ -72,7 +73,7 @@ export default function Page() {
 		return () => {
 			if (heroSection) io.disconnect();
 		};
-	}, [heroSectionRef, videoRef, scrollRef]);
+	}, [heroSectionRef, videoRef, scrollRef, getStartedRef, linkRef]);
 
 	return (
 		<>
@@ -130,6 +131,7 @@ export default function Page() {
 						Only One thing left to do
 					</h2>
 					<Link
+						ref={linkRef}
 						href="/account"
 						className="flex mt-8 items-center max-w-full overflow-clip bg-black rounded-xl border border-neutral-800"
 					>
@@ -146,13 +148,13 @@ export default function Page() {
 						<div
 							className="flex flex-col justify-between pr-4"
 							style={{ visibility: 'hidden' }}
-							id="button_get_started"
+							ref={getStartedRef}
 						>
-							<h2 className="font-bold text-lg text-white">
+							<div className="font-bold text-lg text-white">
 								Get <span className="text-blue-500">Started</span>
 								<br />
 								Today <ArrowRight />
-							</h2>
+							</div>
 							<p className="mt-2">Create or login to get in.</p>
 						</div>
 					</Link>

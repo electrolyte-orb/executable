@@ -16,7 +16,7 @@ const Button = forwardRef(function Button(
 	// REMOVED: border
 	// REMOVED: text-sm
 	let commonStyles =
-		'font-medium leading-6 inline-flex items-center justify-center transition ease-[easeOutCubic] duration-100 active:scale-95';
+		'font-medium leading-6 inline-flex items-center justify-center transition ease-[easeOutExpo] duration-100 active:scale-95';
 	let variantStyles = '';
 	let sizeStyles = '';
 

@@ -58,22 +58,10 @@ export default function SupabaseProvider({
 		};
 	}, [supabase, router, session]);
 
-	useEffect(() => {
-		console.log('REFRESHING', refreshing);
-	}, [refreshing]);
 	return (
 		<Context.Provider value={{ supabase, session }}>
 			<>
 				{refreshing && <Loader />}
-				<button
-					onClick={() => {
-						startTransition(() => {
-							router.refresh();
-						});
-					}}
-				>
-					Loader the page
-				</button>
 				{children}
 			</>
 		</Context.Provider>
