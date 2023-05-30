@@ -1,7 +1,14 @@
 import 'server-only';
-import { headers, cookies } from 'next/headers';
-import { createServerComponentSupabaseClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
+import { cache } from 'react';
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 
-export default function supabaseClient() {
-	return createServerComponentSupabaseClient({ headers, cookies });
-}
+const supabase = cache(() => {
+	return createServerComponentClient({ cookies });
+});
+
+export const getUser = cache(async () => {
+	return await supabase().auth.getSession();
+});
+
+export default supabase;

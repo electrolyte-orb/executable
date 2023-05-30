@@ -1,7 +1,7 @@
 'use client';
 import { useSupabase } from '@/app/supabase-provider';
 import { useRouter } from 'next/navigation';
-import { Button } from '../../components';
+import { Button } from '../../../components';
 
 export default function SignOut() {
 	const { supabase } = useSupabase();

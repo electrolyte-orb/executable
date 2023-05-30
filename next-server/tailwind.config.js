@@ -52,7 +52,7 @@ module.exports = {
 				contentShow: 'contentShow 200ms ease-out-expo forwards',
 				contentShowX: 'contentShowX 2000ms ease-out-expo forwards',
 				contentHide: 'contentHide 200ms ease-out forwards',
-				fillWidth: 'fillWidth 3s ease-out-expo forwards',
+				fillWidth: 'fillWidth 4s ease-out-expo forwards',
 			},
 		},
 	},
