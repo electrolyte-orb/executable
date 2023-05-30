@@ -1,10 +1,12 @@
-export const runtime = 'edge';
+import { Main } from "@/components";
+
+export const runtime = "edge";
 export const revalidate = 0;
 
 export default async function ProtectedLayout({
-	children,
+  children,
 }: {
-	children: React.ReactNode;
+  children: React.ReactNode;
 }) {
-	return <div className="text-red-500">{children}</div>;
+  return <Main>{children}</Main>;
 }

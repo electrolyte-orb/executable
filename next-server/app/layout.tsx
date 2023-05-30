@@ -1,11 +1,25 @@
 // styles and fonts
-import { myFont } from './styles';
+import './globals.css';
 // Providers
 import IconoirProvider from './iconoir-context';
 // components
 import { Navbar } from '@/components';
 
 export const runtime = 'edge';
+import localFont from 'next/font/local';
+
+const myFont = localFont({
+	src: [
+		{
+			path: '../node_modules/inter-ui/Inter (web latin)/Inter.var.woff2',
+		},
+		{
+			path: '../node_modules/inter-ui/Inter (web latin)/Inter-italic.var.woff2',
+			style: 'italic',
+		},
+	],
+	variable: '--sans-font',
+});
 
 export default async function RootLayout({
 	children,
@@ -13,12 +27,8 @@ export default async function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<html lang="en">
-			<body
-				className={
-					myFont.className + ' bg-black text-neutral-400 leading-tight'
-				}
-			>
+		<html lang="en" className={myFont.variable}>
+			<body className="bg-black text-neutral-400 leading-tight">
 				<Navbar />
 				<IconoirProvider
 					iconProps={{
