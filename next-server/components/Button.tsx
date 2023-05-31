@@ -2,13 +2,15 @@ import { HTMLAttributes, forwardRef, ForwardedRef } from "react";
 
 interface ButtonProps {
   variant?: "primary" | "danger" | "secondary";
-  size?: "large";
+  size?: "large" | "small";
+  disabled?: boolean;
 }
 const Button = forwardRef(function Button(
   {
     className,
     variant,
     size,
+    disabled,
     ...props
   }: HTMLAttributes<HTMLButtonElement> & ButtonProps,
   ref: ForwardedRef<HTMLButtonElement>
@@ -22,8 +24,10 @@ const Button = forwardRef(function Button(
     case "large":
       sizeStyles += "p-4 rounded text-sm";
       break;
+    case "small":
+      sizeStyles += "p-2 rounded text-sm";
     default:
-      sizeStyles += "p-3 rounded text-sm";
+      sizeStyles += "p-3 rounded-[5px] text-sm";
       break;
   }
 
@@ -36,7 +40,8 @@ const Button = forwardRef(function Button(
       variantStyles += "bg-red-600 text-white hover:bg-red-500";
       break;
     case "secondary":
-      variantStyles += "bg-neutral-800 text-white hover:bg-neutral-700";
+      variantStyles +=
+        "bg-black border border-neutral-700 text-white hover:bg-neutral-900";
       break;
     default:
       break;
@@ -44,6 +49,7 @@ const Button = forwardRef(function Button(
 
   return (
     <button
+      disabled={disabled}
       className={`${sizeStyles} ${commonStyles} ${variantStyles} ${className}`}
       {...props}
       ref={ref}

@@ -8,7 +8,7 @@ export default function Navbar() {
 
   if (pathname.includes("(protected)")) isProtected = true;
   return (
-    <nav className="px-8 py-5 sticky top-0 z-20 flex items-center backdrop-blur-sm bg-black/20 border-b border-neutral-800">
+    <nav className="px-8 py-5 sticky top-0 z-20 flex items-center backdrop-blur-sm bg-black/20 border-b-2 border-neutral-800">
       <Link
         href="/"
         className="inline-flex items-center font-medium text-lg leading-tight tracking-tight text-white"

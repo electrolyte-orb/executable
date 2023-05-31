@@ -1,6 +1,5 @@
 "use client";
 import * as Dialog from "@radix-ui/react-dialog";
-import { NavArrowRight } from "iconoir-react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useState } from "react";
 import { Button } from "@/components";
@@ -24,30 +23,24 @@ export default function InitDialog() {
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
-        <Button className="group mt-10 w-full" variant="primary">
-          Login
-          <NavArrowRight
-            height={16}
-            width={16}
-            strokeWidth={2}
-            className="ml-2"
-          />
+        <Button className="group mt-10 w-full bg-white text-black">
+          Login with provider
         </Button>
       </Dialog.Trigger>
 
       <Dialog.Portal>
         <Dialog.Overlay className="bg-black bg-opacity-75 data-[state=open]:animate-overlayShow fixed inset-0 backdrop-blur-sm" />
 
-        <Dialog.Content className="max-h-screen overflow-auto transition-all data-[state=closed]:animate-contentHide data-[state=open]:animate-contentShow fixed top-1/2 left-1/2 bg-black border-2 border-neutral-800 rounded-md w-[calc(100%-16px)] lg:w-1/3">
-          <Dialog.Title className="font-bold text-2xl text-white px-8 py-4 bg-neutral-900">
-            Login
+        <Dialog.Content className="max-h-screen overflow-auto transition-all data-[state=closed]:animate-contentHide data-[state=open]:animate-contentShow fixed top-1/2 left-1/2 bg-black/50 border-2 border-neutral-800 rounded-lg w-[calc(100%-32px)] lg:w-1/3">
+          <Dialog.Title className="font-bold text-xl text-white px-6 py-6">
+            Login providers
           </Dialog.Title>
-          <p className="px-8 leading-normal mt-6 text-white">
+          <Dialog.Description className="px-6 leading-normal text-white text-sm">
             We do not own or share your Google™️ data. We do have access to your
             email, but we will use it for verification purposes only.
-          </p>
+          </Dialog.Description>
 
-          <div className="flex flex-col lg:flex-row gap-2 bg-neutral-900 px-8 py-6 mt-6">
+          <div className="flex flex-col lg:flex-row gap-2 bg-black border-t-2 border-neutral-800 px-6 py-6 mt-6">
             <Button
               onClick={() => {
                 handleSubmit();
@@ -57,7 +50,7 @@ export default function InitDialog() {
               Login with Google
             </Button>
             <Dialog.Close asChild>
-              <Button variant="danger" className="w-full">
+              <Button variant="secondary" className="w-full">
                 Not now
               </Button>
             </Dialog.Close>

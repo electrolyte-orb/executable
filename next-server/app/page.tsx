@@ -129,7 +129,7 @@ export default function Page() {
               muted
               height="128px"
               width="128px"
-              poster="/poster.png"
+              poster="/poster.webp"
               ref={videoRef}
               className="pointer-events-none inline-block"
             >

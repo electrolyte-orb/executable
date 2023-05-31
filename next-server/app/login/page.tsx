@@ -4,17 +4,19 @@ import { getUser } from "@/utils/supabase-server";
 import { redirect } from "next/navigation";
 
 export const revalidate = 0;
+export const runtime = "edge";
+
 export default async function LoginPage() {
   let session = null;
   let error = null;
 
   try {
     const {
-      data: { session: __session },
-      error: __error,
+      data: { session: newSession },
+      error: newError,
     } = await getUser();
-    session = __session;
-    error = __error;
+    session = newSession;
+    error = newError;
   } catch (e) {}
 
   if (session !== null && error === null) redirect("/account");
