@@ -1,11 +1,19 @@
 // styles and fonts
 import "./globals.css";
+import { Unbounded } from "next/font/google";
+import localFont from "next/font/local";
 // Providers
 import IconoirProvider from "./iconoir-context";
 // components
 import { Navbar } from "@/components";
+import { Suspense } from "react";
 
-import localFont from "next/font/local";
+const secondaryFont = Unbounded({
+  weight: "variable",
+  subsets: ["latin"],
+  variable: "--sec-font",
+  fallback: ["system-ui"],
+});
 
 const myFont = localFont({
   src: [
@@ -18,6 +26,7 @@ const myFont = localFont({
     },
   ],
   variable: "--sans-font",
+  fallback: ["system-ui"],
 });
 
 export default async function RootLayout({
@@ -26,13 +35,15 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={myFont.variable}>
-      <body className="bg-black text-white leading-tight">
-        <Navbar />
+    <html lang="en" className={myFont.variable + " " + secondaryFont.variable}>
+      <body className="bg-gray-900 text-white leading-tight">
+        <Suspense fallback={null}>
+          <Navbar />
+        </Suspense>
         <IconoirProvider
           iconProps={{
-            width: "1.5rem",
-            height: "1.5rem",
+            width: 24,
+            height: 24,
             style: { display: "inline-block" },
           }}
         >

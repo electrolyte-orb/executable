@@ -8,6 +8,7 @@ module.exports = {
 	theme: {
 		fontFamily: {
 			sans: ['var(--sans-font)', 'system-ui'],
+			secondary: ['var(--sec-font)', 'system-ui']
 		},
 		extend: {
 			keyframes: {

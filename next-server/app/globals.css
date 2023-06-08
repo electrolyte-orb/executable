@@ -3,7 +3,10 @@
 @tailwind utilities;
 
 @layer base {
-	* {
-		-webkit-tap-highlight-color: transparent;
-	}
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+  .active-link {
+    @apply relative before:absolute before:h-1 before:w-1 before:bg-purple-500 before:-bottom-2 before:left-1/2 before:-translate-x-1/2 before:rounded-full;
+  }
 }
