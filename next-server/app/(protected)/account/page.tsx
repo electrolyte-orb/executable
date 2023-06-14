@@ -13,18 +13,13 @@ export default async function AccountPage() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold tracking-tight">Hello there,</h1>
-      <h3>{user?.user.user_metadata.full_name}</h3>
-      <div className="mt-4 rounded-md border border-red-600 flex flex-col overflow-auto">
-        <div className="p-4">
-          <h1 className="mb-2 font-medium text-lg">Proceed with caution</h1>
-          <p className="leading-normal text-sm">
-            These are irrecoverable changes.
-          </p>
-        </div>
-        <div className="p-4 bg-neutral-900 border-t border-neutral-700">
-          <SignOut />
-        </div>
+      <h1 className="text-3xl font-bold font-secondary">Hello there!</h1>
+
+      <h3 className="mt-2 font-secondary leading-normal text-lg text-gray-400">
+        {user?.user.user_metadata.full_name}
+      </h3>
+      <div className="mt-4">
+        <SignOut />
       </div>
     </div>
   );

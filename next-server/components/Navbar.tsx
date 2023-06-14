@@ -1,9 +1,24 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const supabase = createClientComponentClient();
+
+  useEffect(() => {
+    supabase.auth.onAuthStateChange((ev, session) => {
+      if (session?.user) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+    });
+  }, [supabase.auth]);
 
   return (
     <nav className="lg:px-24 px-4 h-[72px] sticky top-0 z-20 flex justify-between items-center backdrop-blur-sm bg-gray-900 border-b border-gray-700">
@@ -26,12 +41,28 @@ export default function Navbar() {
         >
           About
         </Link>
-        <Link
-          href="/login"
-          className={pathname === "/login" ? "text-purple-500 active-link" : ""}
-        >
-          Sign in
-        </Link>
+
+        {isLoggedIn ? (
+          <Link
+            href="/login"
+            className={
+              pathname.startsWith("/account") || pathname.startsWith("/chat")
+                ? "text-purple-500 active-link"
+                : ""
+            }
+          >
+            Dashboard
+          </Link>
+        ) : (
+          <Link
+            href="/login"
+            className={
+              pathname === "/login" ? "text-purple-500 active-link" : ""
+            }
+          >
+            Sign in
+          </Link>
+        )}
       </div>
     </nav>
   );

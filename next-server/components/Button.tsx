@@ -17,40 +17,27 @@ const Button = forwardRef(function Button(
 ) {
   let commonStyles =
     "font-medium leading-3 inline-flex items-center justify-center transition duration-[10ms]";
-  let variantStyles = "";
-  let sizeStyles = "";
 
-  switch (size) {
-    case "large":
-      sizeStyles += "p-4 rounded text-sm";
-      break;
-    case "small":
-      sizeStyles += "p-2 rounded text-sm";
-    default:
-      sizeStyles += "p-3 rounded-[5px] text-sm";
-      break;
-  }
+  let variantStyles = {
+    primary: "bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800",
+    danger: "bg-red-600 text-white border-t border-red-400 hover:bg-red-700",
+    dangerLight: "bg-red-600 text-white hover:bg-red-500",
+    secondary:
+      "bg-black border border-neutral-700 text-white hover:bg-neutral-900",
+  };
 
-  switch (variant) {
-    case "primary":
-      variantStyles +=
-        "bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800";
-      break;
-    case "danger":
-      variantStyles += "bg-red-600 text-white hover:bg-red-500";
-      break;
-    case "secondary":
-      variantStyles +=
-        "bg-black border border-neutral-700 text-white hover:bg-neutral-900";
-      break;
-    default:
-      break;
-  }
+  let sizeStyles = {
+    large: "p-4 rounded text-sm",
+    small: "p-2 rounded text-sm",
+    default: "p-3 rounded-[5px] text-sm",
+  };
 
   return (
     <button
       disabled={disabled}
-      className={`${sizeStyles} ${commonStyles} ${variantStyles} ${className}`}
+      className={`${sizeStyles[size ?? "default"]} ${commonStyles} ${
+        variantStyles[variant ?? "secondary"]
+      } ${className}`}
       {...props}
       ref={ref}
     ></button>

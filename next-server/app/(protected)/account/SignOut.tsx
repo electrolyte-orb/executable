@@ -21,7 +21,6 @@ export default function SignOut() {
     <AlertDialog.Root>
       <AlertDialog.Trigger asChild>
         <Button
-          size="small"
           className={" " + (loading && "opacity-50")}
           variant="danger"
           disabled={loading}

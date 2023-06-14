@@ -6,10 +6,14 @@ import Link from "next/link";
 export default function HomePage() {
   return (
     <main className="lg:px-24 px-4">
-      <div className="lg:mt-32 mt-16 text-sm font-medium bg-gray-800 text-gray-400 h-8 rounded-full pl-4 pr-2 inline-flex items-center border-t-[1pt] border-gray-700 leading-3">
+      <Link
+        href="https://supabase.com/"
+        target="_blank"
+        className="lg:mt-32 mt-16 text-sm font-medium bg-gray-800 text-gray-400 h-8 rounded-full pl-4 pr-2 inline-flex items-center border-t-[1pt] border-gray-700 leading-3"
+      >
         We are using supabase now!
         <ArrowRightCircle className="h-6 w-6 ml-2 text-gray-600" />
-      </div>
+      </Link>
 
       <section className="mt-2 flex justify-between">
         <h1 className="font-secondary lg:text-[4rem] text-5xl leading-none font-bold tracking-tight">
@@ -39,10 +43,10 @@ export default function HomePage() {
           className="h-14 rounded-xl flex items-center px-10 bg-blue-600 border-t-[1pt] border-blue-500 font-medium"
         >
           Get started
-          <Rocket width={24} height={24} className="ml-1" />
+          <Rocket width={24} height={24} className="lg:ml-1 ml-auto" />
         </Link>
         <Link
-          className="h-14 rounded-xl flex items-center px-10 bg-gray-800 font-medium"
+          className="h-14 rounded-xl flex items-center px-10 bg-gray-800 border-t-[1pt] border-gray-700 font-medium"
           target="_blank"
           href="https://github.com/electrolyte-orb/executable"
         >
