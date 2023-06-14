@@ -3,6 +3,12 @@ import HeroImage from "@/public/executable_heroImage.svg";
 import Image from "next/image";
 import Link from "next/link";
 
+export const metadata = {
+  title: "Executable - Make your world, love your world, expand | Homepage",
+  description:
+    "Executable - Make your world, love your world, expand | Homepage",
+};
+
 export default function HomePage() {
   return (
     <main className="lg:px-24 px-4">

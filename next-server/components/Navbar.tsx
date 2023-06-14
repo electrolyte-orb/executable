@@ -11,13 +11,15 @@ export default function Navbar() {
   const supabase = createClientComponentClient();
 
   useEffect(() => {
-    supabase.auth.onAuthStateChange((ev, session) => {
+    const { data } = supabase.auth.onAuthStateChange((ev, session) => {
       if (session?.user) {
         setIsLoggedIn(true);
       } else {
         setIsLoggedIn(false);
       }
     });
+
+    return data.subscription.unsubscribe;
   }, [supabase.auth]);
 
   return (
@@ -43,16 +45,28 @@ export default function Navbar() {
         </Link>
 
         {isLoggedIn ? (
-          <Link
-            href="/login"
-            className={
-              pathname.startsWith("/account") || pathname.startsWith("/chat")
-                ? "text-purple-500 active-link"
-                : ""
-            }
-          >
-            Dashboard
-          </Link>
+          <>
+            <Link
+              href="/account"
+              className={
+                pathname.startsWith("/account")
+                  ? "text-purple-500 active-link"
+                  : ""
+              }
+            >
+              Account
+            </Link>
+            <Link
+              href="/chat"
+              className={
+                pathname.startsWith("/chat")
+                  ? "text-purple-500 active-link"
+                  : ""
+              }
+            >
+              Dashboard
+            </Link>
+          </>
         ) : (
           <Link
             href="/login"
