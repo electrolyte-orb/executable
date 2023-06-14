@@ -24,6 +24,7 @@ const Button = forwardRef(function Button(
     dangerLight: "bg-red-600 text-white hover:bg-red-500",
     secondary:
       "bg-black border border-neutral-700 text-white hover:bg-neutral-900",
+    default: "",
   };
 
   let sizeStyles = {
@@ -36,7 +37,7 @@ const Button = forwardRef(function Button(
     <button
       disabled={disabled}
       className={`${sizeStyles[size ?? "default"]} ${commonStyles} ${
-        variantStyles[variant ?? "secondary"]
+        variantStyles[variant ?? "default"]
       } ${className}`}
       {...props}
       ref={ref}
