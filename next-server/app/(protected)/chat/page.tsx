@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { Contacts } from "./Contacts";
+import Contacts from "./Contacts";
 import AddContact from "./AddContact";
 
 export const metadata = {
