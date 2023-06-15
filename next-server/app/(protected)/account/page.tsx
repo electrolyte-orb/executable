@@ -1,6 +1,7 @@
 import { getUser } from "@/utils/supabase-server";
 import SignOut from "./SignOut";
 
+export const runtime = "edge";
 export const metadata = {
   title: "Account Management | Executable",
   description: "Account Management page of Executable",
