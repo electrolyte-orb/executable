@@ -53,7 +53,7 @@ export default async function Contacts() {
               </div>
             </div>
             <i className="absolute top-1/2 -translate-y-1/2 right-6 inline-grid place-items-center h-6 w-6 bg-gray-900 text-gray-600 rounded-full pointer-events-none opacity-0 group-hover:opacity-100 transition duration-200">
-              <ArrowRight className="h-4 w-4" />
+              <ArrowRight className="h-4 w-4" strokeWidth={2} />
             </i>
           </Link>
         ))}
