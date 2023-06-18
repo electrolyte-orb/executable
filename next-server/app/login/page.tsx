@@ -19,7 +19,7 @@ export default async function LoginPage() {
     error = newError;
   } catch (e) {}
 
-  if (session !== null && error === null) redirect("/account");
+  if (session !== null && error === null) redirect("/chat");
 
   return (
     <Main>

@@ -4,125 +4,209 @@ export type Json =
   | boolean
   | null
   | { [key: string]: Json }
-  | Json[];
+  | Json[]
 
 export interface Database {
   public: {
     Tables: {
+      Blocklist: {
+        Row: {
+          blockedId: string
+          id: string
+          ownerId: string
+        }
+        Insert: {
+          blockedId: string
+          id?: string
+          ownerId: string
+        }
+        Update: {
+          blockedId?: string
+          id?: string
+          ownerId?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "Blocklist_blockedId_fkey"
+            columns: ["blockedId"]
+            referencedRelation: "User"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "Blocklist_ownerId_fkey"
+            columns: ["ownerId"]
+            referencedRelation: "User"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       Contact: {
         Row: {
-          contactId: string;
-          id: string;
-          ownerId: string;
-          savedName: string;
-          unseenMessages: number | null;
-        };
+          friend: string
+          id: string
+          ownerId: string
+          savedName: string
+          unseenMessages: number | null
+        }
         Insert: {
-          contactId: string;
-          id?: string;
-          ownerId: string;
-          savedName: string;
-          unseenMessages?: number | null;
-        };
+          friend: string
+          id?: string
+          ownerId: string
+          savedName?: string
+          unseenMessages?: number | null
+        }
         Update: {
-          contactId?: string;
-          id?: string;
-          ownerId?: string;
-          savedName?: string;
-          unseenMessages?: number | null;
-        };
+          friend?: string
+          id?: string
+          ownerId?: string
+          savedName?: string
+          unseenMessages?: number | null
+        }
         Relationships: [
           {
-            foreignKeyName: "Contact_contactId_fkey";
-            columns: ["contactId"];
-            referencedRelation: "User";
-            referencedColumns: ["id"];
+            foreignKeyName: "Contact_friend_fkey"
+            columns: ["friend"]
+            referencedRelation: "Friend"
+            referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "Contact_ownerId_fkey";
-            columns: ["ownerId"];
-            referencedRelation: "User";
-            referencedColumns: ["id"];
+            foreignKeyName: "Contact_ownerId_fkey"
+            columns: ["ownerId"]
+            referencedRelation: "User"
+            referencedColumns: ["id"]
           }
-        ];
-      };
+        ]
+      }
+      Friend: {
+        Row: {
+          friendId: string
+          id: string
+          ownerId: string
+        }
+        Insert: {
+          friendId: string
+          id?: string
+          ownerId: string
+        }
+        Update: {
+          friendId?: string
+          id?: string
+          ownerId?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "Friend_friendId_fkey"
+            columns: ["friendId"]
+            referencedRelation: "User"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "Friend_ownerId_fkey"
+            columns: ["ownerId"]
+            referencedRelation: "User"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       Message: {
         Row: {
-          createdAt: string;
-          id: string;
-          message: string;
-          receiverId: string;
-          senderId: string;
-        };
+          createdAt: string | null
+          id: string
+          isNotReadable: boolean | null
+          message: string
+          receiverId: string
+          senderId: string
+        }
         Insert: {
-          createdAt?: string;
-          id?: string;
-          message: string;
-          receiverId: string;
-          senderId: string;
-        };
+          createdAt?: string | null
+          id?: string
+          isNotReadable?: boolean | null
+          message: string
+          receiverId: string
+          senderId: string
+        }
         Update: {
-          createdAt?: string;
-          id?: string;
-          message?: string;
-          receiverId?: string;
-          senderId?: string;
-        };
+          createdAt?: string | null
+          id?: string
+          isNotReadable?: boolean | null
+          message?: string
+          receiverId?: string
+          senderId?: string
+        }
         Relationships: [
           {
-            foreignKeyName: "Message_receiverId_fkey";
-            columns: ["receiverId"];
-            referencedRelation: "User";
-            referencedColumns: ["id"];
+            foreignKeyName: "Message_receiverId_fkey"
+            columns: ["receiverId"]
+            referencedRelation: "Friend"
+            referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "Message_senderId_fkey";
-            columns: ["senderId"];
-            referencedRelation: "User";
-            referencedColumns: ["id"];
+            foreignKeyName: "Message_senderId_fkey"
+            columns: ["senderId"]
+            referencedRelation: "User"
+            referencedColumns: ["id"]
           }
-        ];
-      };
+        ]
+      }
       User: {
         Row: {
-          id: string;
-          pictureUrl: string | null;
-          supabaseId: string;
-          username: string;
-        };
+          id: string
+          pictureUrl: string | null
+          username: string
+        }
         Insert: {
-          id?: string;
-          pictureUrl?: string | null;
-          supabaseId: string;
-          username: string;
-        };
+          id: string
+          pictureUrl?: string | null
+          username: string
+        }
         Update: {
-          id?: string;
-          pictureUrl?: string | null;
-          supabaseId?: string;
-          username?: string;
-        };
+          id?: string
+          pictureUrl?: string | null
+          username?: string
+        }
         Relationships: [
           {
-            foreignKeyName: "User_supabaseId_fkey";
-            columns: ["supabaseId"];
-            referencedRelation: "users";
-            referencedColumns: ["id"];
+            foreignKeyName: "User_id_fkey"
+            columns: ["id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
           }
-        ];
-      };
-    };
+        ]
+      }
+    }
     Views: {
-      [_ in never]: never;
-    };
+      GetContactsWithProfiles: {
+        Row: {
+          friend: string | null
+          pictureUrl: string | null
+          savedName: string | null
+          unseenMessages: number | null
+          username: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "Contact_friend_fkey"
+            columns: ["friend"]
+            referencedRelation: "Friend"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+    }
     Functions: {
-      [_ in never]: never;
-    };
+      is_blocked: {
+        Args: {
+          blockerid: string
+          blockedid: string
+        }
+        Returns: boolean
+      }
+    }
     Enums: {
-      [_ in never]: never;
-    };
+      [_ in never]: never
+    }
     CompositeTypes: {
-      [_ in never]: never;
-    };
-  };
+      [_ in never]: never
+    }
+  }
 }
