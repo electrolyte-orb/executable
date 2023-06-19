@@ -1,60 +1,127 @@
 "use client";
-import * as Form from "@radix-ui/react-form";
 import { Button } from "@/components";
-import { FormEvent } from "react";
+import * as Dialog from "@radix-ui/react-dialog";
+import * as Form from "@radix-ui/react-form";
+import { Plus, Cancel, ArrowLeft } from "iconoir-react";
+import { FormEvent, useState } from "react";
 
 export default function AddContact() {
+  const PROMPT_NOT_INITIATED = 0;
+  const ADD_NEW_FRIEND = 1;
+  const ADD_EXISTING_FRIEND = 2;
+
+  const [contactPrompt, setContactPrompt] = useState(PROMPT_NOT_INITIATED);
+
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
     // add supabase save logic
+    console.log("SAVED");
   }
 
   return (
-    <Form.Root
-      autoComplete="off"
-      autoCorrect="off"
-      autoCapitalize="off"
-      className="lg:w-1/3"
-      onSubmit={handleSubmit}
+    <Dialog.Root
+      onOpenChange={(open) => !open && setContactPrompt(PROMPT_NOT_INITIATED)}
     >
-      <Form.Field name="contactName">
-        <Form.Label className="text-sm text-gray-400">
-          Name of contact
-        </Form.Label>
-        <Form.Control asChild>
-          <input
-            className="mt-1 p-2 w-full block bg-gray-800 focus:bg-black focus:outline-none focus:ring-2 focus:ring-blue-500 border-t border-gray-700 rounded-md"
-            type="text"
-            minLength={3}
-            maxLength={40}
-            placeholder="Evil Rabbit"
-            required
-          />
-        </Form.Control>
-      </Form.Field>
-      <Form.Field name="contactId" className="mt-4">
-        <Form.Label className="text-sm text-gray-400">
-          Executable ID of contact
-        </Form.Label>
-        <Form.Control asChild>
-          <input
-            type="text"
-            className="mt-1 p-2 w-full block bg-gray-800 focus:bg-black focus:outline-none focus:ring-2 focus:ring-blue-500 border-t border-gray-700 rounded-md"
-            minLength={36}
-            maxLength={36}
-            placeholder="hellowor-ld00-0000-0000-000000000000"
-            required
-          />
-        </Form.Control>
-      </Form.Field>
-      <Form.Submit asChild>
-        <Button variant="primary" className="mt-4">
-          Save Now
-        </Button>
-      </Form.Submit>
-      <p className="text-xs text-gray-500 mt-4">
-        Feature does not work. In development.
-      </p>
-    </Form.Root>
+      <Dialog.Trigger asChild>
+        <button
+          style={{
+            backgroundImage:
+              'url("/button_grain_x2.webp"), linear-gradient(white, white)',
+            backgroundSize: "cover",
+          }}
+          className="fixed z-20 lg:absolute right-2 lg:right-0 bottom-2 lg:bottom-0 scale-75 lg:scale-100 hover:ring-4 hover:ring-white/20 text-[32px] font-bold text-black tracking-tight rounded-2xl flex items-center p-[20px]"
+        >
+          <div className="h-8 w-8 rounded-full grid place-items-center bg-black text-white">
+            <Plus className="h-6 w-6" />
+          </div>
+          <div className="ml-[19px]">Add</div>
+        </button>
+      </Dialog.Trigger>
+
+      <Dialog.Portal>
+        <Dialog.Overlay className="fixed inset-0 bg-black/20 backdrop-blur-sm data-[state=open]:animate-overlayShow z-40" />
+        <Dialog.Content className="h-[90svh] lg:h-[80vh] max-w-full w-[90vw] lg:w-1/2 p-8 bg-gray-800 border-t border-gray-600 rounded-3xl fixed z-40 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 data-[state=open]:animate-contentShow data-[state=closed]:animate-contentHide">
+          <Dialog.Close className="absolute right-4 top-4">
+            <Cancel />
+          </Dialog.Close>
+
+          <Dialog.Title className="text-4xl font-bold text-white tracking-tight">
+            Add new contact
+          </Dialog.Title>
+          <div className="mt-8">
+            {contactPrompt === PROMPT_NOT_INITIATED && (
+              <>
+                <Button
+                  variant="secondary"
+                  onClick={() => setContactPrompt(ADD_NEW_FRIEND)}
+                >
+                  Add New Friend
+                </Button>
+                <Button
+                  variant="secondary"
+                  onClick={() => setContactPrompt(ADD_EXISTING_FRIEND)}
+                >
+                  Add Existing Friend
+                </Button>
+              </>
+            )}
+            {contactPrompt === ADD_NEW_FRIEND && (
+              <>
+                <Button
+                  variant="secondary"
+                  className="flex"
+                  onClick={() => setContactPrompt(PROMPT_NOT_INITIATED)}
+                >
+                  <ArrowLeft />
+                  Go Back
+                </Button>
+                <h1>Add New Friend</h1>
+                <Form.Root onSubmit={handleSubmit}>
+                  <Form.Field name="contactName">
+                    <Form.Label className="block">Name of Friend</Form.Label>
+                    <Form.Control asChild>
+                      <input
+                        type="text"
+                        id="contactName"
+                        placeholder="Name"
+                        className="text-white bg-gray-700 rounded-md border-t border-gray-600 font-medium p-2 focus:outline-none"
+                      />
+                    </Form.Control>
+                  </Form.Field>
+                  <Form.Field name="contactID">
+                    <Form.Label className="block">Executable ID</Form.Label>
+                    <Form.Control asChild>
+                      <input
+                        type="text"
+                        id="contactName"
+                        placeholder="16 Digit ID"
+                        className="text-white bg-gray-700 rounded-md border-t border-gray-600 font-medium p-2 focus:outline-none"
+                      />
+                    </Form.Control>
+                  </Form.Field>
+                  <Form.Submit asChild>
+                    <Button variant="secondary">Create contact</Button>
+                  </Form.Submit>
+                </Form.Root>
+              </>
+            )}
+            {contactPrompt === ADD_EXISTING_FRIEND && (
+              <>
+                <Button
+                  variant="secondary"
+                  className="flex"
+                  onClick={() => setContactPrompt(PROMPT_NOT_INITIATED)}
+                >
+                  <ArrowLeft />
+                  Go Back
+                </Button>
+                <br />
+                Feature NOT IMPLEMENTED YET!
+              </>
+            )}
+          </div>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
 }

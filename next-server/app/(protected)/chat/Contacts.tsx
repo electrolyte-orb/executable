@@ -1,7 +1,7 @@
 import supabaseClient from "@/utils/supabase-server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { ProfileCircle, Plus, ArrowRight } from "iconoir-react";
+import { ProfileCircle, ArrowRight } from "iconoir-react";
 
 export default async function Contacts() {
   const supabase = supabaseClient();
@@ -17,22 +17,14 @@ export default async function Contacts() {
 
   return (
     <>
-      <section className="mt-4 relative">
+      <section className="mt-4">
         <div className="font-bold text-gray-500 uppercase tracking-wide text-center">
           TOTAL{" "}
           {data.length <= 1
             ? `${data.length} CONTACT`
             : `${data.length} CONTACTS`}
         </div>
-        <button
-          style={{ backgroundImage: 'url("/button_grain.png")' }}
-          className="absolute right-0 text-[32px] font-bold text-black tracking-tight rounded-2xl top-[calc(-80px-16px)] flex items-center p-[20px]"
-        >
-          <div className="h-8 w-8 rounded-full grid place-items-center bg-black text-white">
-            <Plus className="h-6 w-6" />
-          </div>
-          <div className="ml-[19px]">Add</div>
-        </button>
+        
       </section>
       <section className="grid grid-cols-1 lg:grid-cols-3 mt-8 gap-4">
         {data.map((contact, index) => (

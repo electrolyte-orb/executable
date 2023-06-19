@@ -22,8 +22,7 @@ const Button = forwardRef(function Button(
     primary:
       "bg-blue-600 text-white border-t border-blue-500 hover:bg-blue-700 active:bg-blue-800",
     danger: "bg-red-600 text-white border-t border-red-400 hover:bg-red-700",
-    secondary:
-      "bg-black border border-neutral-700 text-white hover:bg-neutral-900",
+    secondary: "bg-black border border-gray-700 text-white hover:bg-gray-900",
     default: "",
   };
 
