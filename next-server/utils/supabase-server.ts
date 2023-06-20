@@ -4,12 +4,12 @@ import { cache } from "react";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import type { Database } from "@/types/database.types";
 
-const supabase = cache(() => {
+const supabaseClient = cache(() => {
   return createServerComponentClient<Database>({ cookies });
 });
 
 export const getUser = cache(async () => {
-  return await supabase().auth.getSession();
+  return await supabaseClient().auth.getSession();
 });
 
-export default supabase;
+export default supabaseClient;

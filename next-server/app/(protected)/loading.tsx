@@ -1,8 +1,7 @@
-export default function Loading() {
+export default function ProtectedLayoutLoading() {
   return (
-    <div>
-      <div className="h-16 bg-gray-800 rounded-lg w-1/2"></div>
-      <div className="h-10 mt-4 bg-gray-800 rounded-lg w-1/3"></div>
+    <div className="mt-16 leading-none text-3xl text-gray-500 font-medium">
+      Fetching stuff over the internet...
     </div>
   );
 }

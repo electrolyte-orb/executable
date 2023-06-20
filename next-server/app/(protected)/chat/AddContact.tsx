@@ -4,8 +4,10 @@ import * as Dialog from "@radix-ui/react-dialog";
 import * as Form from "@radix-ui/react-form";
 import { Plus, Cancel, ArrowLeft } from "iconoir-react";
 import { FormEvent, useState } from "react";
+import supabaseClient from "@/utils/supabase-client";
 
 export default function AddContact() {
+  const supabase = supabaseClient();
   const PROMPT_NOT_INITIATED = 0;
   const ADD_NEW_FRIEND = 1;
   const ADD_EXISTING_FRIEND = 2;
@@ -14,8 +16,6 @@ export default function AddContact() {
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    // add supabase save logic
-    console.log("SAVED");
   }
 
   return (

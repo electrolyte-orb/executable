@@ -1,14 +1,20 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useEffect, useState } from "react";
+import supabaseClient from "@/utils/supabase-client";
+import {
+  AddUser,
+  ChatLines,
+  HomeSimpleDoor,
+  ProfileCircle,
+} from "iconoir-react";
 
 export default function Navbar() {
   const pathname = usePathname();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const supabase = createClientComponentClient();
+  const supabase = supabaseClient();
 
   useEffect(() => {
     const { data } = supabase.auth.onAuthStateChange((ev, session) => {
@@ -30,6 +36,54 @@ export default function Navbar() {
       >
         Executable
       </Link>
+
+      <div className="flex gap-1 lg:hidden text-gray-500 p-[2px] bg-gray-800 border-t border-gray-700 rounded-full">
+        <Link
+          href="/"
+          className={
+            "p-2 rounded-full " +
+            (pathname === "/" ? "bg-gray-700 text-white" : "")
+          }
+        >
+          <HomeSimpleDoor className="h-4 w-4" strokeWidth={2} />
+        </Link>
+
+        {isLoggedIn ? (
+          <>
+            <Link
+              href="/account"
+              className={
+                "p-2 rounded-full " +
+                (pathname.startsWith("/account")
+                  ? "bg-gray-700 text-white"
+                  : "")
+              }
+            >
+              <ProfileCircle className="h-4 w-4" strokeWidth={2} />
+            </Link>
+            <Link
+              href="/chat"
+              className={
+                "p-2 rounded-full " +
+                (pathname.startsWith("/chat") ? "bg-gray-700 text-white" : "")
+              }
+            >
+              <ChatLines className="h-4 w-4" strokeWidth={2} />
+            </Link>
+          </>
+        ) : (
+          <Link
+            href="/login"
+            className={
+              "p-2 rounded-full " +
+              (pathname.startsWith("/login") ? "bg-gray-700 text-white" : "")
+            }
+          >
+            <AddUser className="h-4 w-4" strokeWidth={2} />
+          </Link>
+        )}
+      </div>
+
       <div className="lg:flex hidden gap-8 text-sm text-gray-400 font-medium">
         <Link
           href="/"
@@ -37,13 +91,6 @@ export default function Navbar() {
         >
           Home
         </Link>
-        <Link
-          href="/"
-          className={pathname === "/about" ? "text-purple-500 active-link" : ""}
-        >
-          About
-        </Link>
-
         {isLoggedIn ? (
           <>
             <Link
