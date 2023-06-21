@@ -1,10 +1,15 @@
 "use client";
 import { Button } from "@/components";
 import * as Dialog from "@radix-ui/react-dialog";
-import * as Form from "@radix-ui/react-form";
 import { Plus, Cancel, ArrowLeft } from "iconoir-react";
 import { FormEvent, useState } from "react";
 import supabaseClient from "@/utils/supabase-client";
+import NewContactForm from "./NewContactForm";
+
+export interface contactsFields {
+  contactName: null | string;
+  userId: null | string;
+}
 
 export default function AddContact() {
   const supabase = supabaseClient();
@@ -13,9 +18,14 @@ export default function AddContact() {
   const ADD_EXISTING_FRIEND = 2;
 
   const [contactPrompt, setContactPrompt] = useState(PROMPT_NOT_INITIATED);
+  const [contactsFields, setContactFields] = useState<contactsFields>({
+    contactName: null,
+    userId: null,
+  });
 
-  function handleSubmit(e: FormEvent) {
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    alert("Form Submitted...");
   }
 
   return (
@@ -76,33 +86,11 @@ export default function AddContact() {
                   Go Back
                 </Button>
                 <h1>Add New Friend</h1>
-                <Form.Root onSubmit={handleSubmit}>
-                  <Form.Field name="contactName">
-                    <Form.Label className="block">Name of Friend</Form.Label>
-                    <Form.Control asChild>
-                      <input
-                        type="text"
-                        id="contactName"
-                        placeholder="Name"
-                        className="text-white bg-gray-700 rounded-md border-t border-gray-600 font-medium p-2 focus:outline-none"
-                      />
-                    </Form.Control>
-                  </Form.Field>
-                  <Form.Field name="contactID">
-                    <Form.Label className="block">Executable ID</Form.Label>
-                    <Form.Control asChild>
-                      <input
-                        type="text"
-                        id="contactName"
-                        placeholder="16 Digit ID"
-                        className="text-white bg-gray-700 rounded-md border-t border-gray-600 font-medium p-2 focus:outline-none"
-                      />
-                    </Form.Control>
-                  </Form.Field>
-                  <Form.Submit asChild>
-                    <Button variant="secondary">Create contact</Button>
-                  </Form.Submit>
-                </Form.Root>
+                <NewContactForm
+                  handleSubmit={handleSubmit}
+                  contactsFields={contactsFields}
+                  setContactsFields={setContactFields}
+                />
               </>
             )}
             {contactPrompt === ADD_EXISTING_FRIEND && (
