@@ -1,10 +1,10 @@
 "use client";
 import * as Form from "@radix-ui/react-form";
-import { Dispatch, FormEvent, SetStateAction, useState } from "react";
+import { FormEvent, useState } from "react";
 import { Button } from "@/components";
 import supabaseClient from "@/utils/supabase-client";
 import { useRouter } from "next/navigation";
-
+import { removeDashes, separateWithDashes } from "@/utils/dash";
 interface NewContactFormProps {
   closePrompt: () => void;
 }
@@ -51,32 +51,16 @@ export default function NewContactForm({ closePrompt }: NewContactFormProps) {
     }
 
     console.log(userSession.session?.user.id);
-    const { data: friend, error: friendInsertError } = await supabase
-      .from("Friend")
-      .insert({
-        friendId: contactFields.userId,
-        ownerId: userSession.session?.user.id ?? "",
-      })
-      .select();
 
-    if (friendInsertError) {
-      console.error("[can't insert friend]", friendInsertError);
+    const { error } = await supabase.rpc("create_new_friend_contact", {
+      contact_name: contactFields.contactName,
+      friend_id: contactFields.userId,
+    });
+
+    if (error) {
+      console.error(error);
       return;
     }
-
-    const { error: contactInsertError } = await supabase
-      .from("Contact")
-      .insert({
-        ownerId: userSession.session?.user.id ?? "",
-        friend: friend[0].id,
-        savedName: contactFields.contactName,
-      });
-
-    if (contactInsertError) {
-      console.error("[contact insert error]", contactInsertError);
-      return;
-    }
-
     closePrompt();
     router.refresh();
   }
@@ -118,6 +102,7 @@ export default function NewContactForm({ closePrompt }: NewContactFormProps) {
           <input
             value={contactFields.userId ?? ""}
             maxLength={36}
+            minLength={36}
             pattern="[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}"
             onChange={(e) =>
               setContactFields((state) => {
@@ -135,28 +120,14 @@ export default function NewContactForm({ closePrompt }: NewContactFormProps) {
         <Form.Message match="valueMissing">
           Please enter the Executable ID of your contact.
         </Form.Message>
+        <Form.Message match="patternMismatch">
+          Doesn{"'"}t seem to be Executable ID. Check for any spaces.
+        </Form.Message>
+        <Form.Message match="tooShort">Too short to be an ID.</Form.Message>
       </Form.Field>
       <Form.Submit asChild>
         <Button variant="secondary">Create contact</Button>
       </Form.Submit>
     </Form.Root>
   );
-}
-function removeDashes(text: string): string {
-  return text.split("-").join("");
-}
-
-function separateWithDashes(text: string): string {
-  let textWithoutDashes = removeDashes(text);
-  let dashedString = "";
-
-  for (let i = 0; i < textWithoutDashes.length; i++) {
-    const char = textWithoutDashes[i];
-    // Add a dash after
-    //        8th        12th        16th        20th character.
-    if (i === 8 || i === 12 || i === 16 || i === 20) dashedString += "-";
-    dashedString += char;
-  }
-
-  return dashedString;
 }

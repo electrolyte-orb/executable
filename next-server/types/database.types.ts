@@ -33,9 +33,21 @@ export interface Database {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "Blocklist_blockedId_fkey"
+            columns: ["blockedId"]
+            referencedRelation: "GetContactsWithProfiles"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "Blocklist_ownerId_fkey"
             columns: ["ownerId"]
             referencedRelation: "User"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "Blocklist_ownerId_fkey"
+            columns: ["ownerId"]
+            referencedRelation: "GetContactsWithProfiles"
             referencedColumns: ["id"]
           }
         ]
@@ -74,6 +86,12 @@ export interface Database {
             columns: ["ownerId"]
             referencedRelation: "User"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "Contact_ownerId_fkey"
+            columns: ["ownerId"]
+            referencedRelation: "GetContactsWithProfiles"
+            referencedColumns: ["id"]
           }
         ]
       }
@@ -101,9 +119,21 @@ export interface Database {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "Friend_friendId_fkey"
+            columns: ["friendId"]
+            referencedRelation: "GetContactsWithProfiles"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "Friend_ownerId_fkey"
             columns: ["ownerId"]
             referencedRelation: "User"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "Friend_ownerId_fkey"
+            columns: ["ownerId"]
+            referencedRelation: "GetContactsWithProfiles"
             referencedColumns: ["id"]
           }
         ]
@@ -145,6 +175,12 @@ export interface Database {
             columns: ["senderId"]
             referencedRelation: "User"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "Message_senderId_fkey"
+            columns: ["senderId"]
+            referencedRelation: "GetContactsWithProfiles"
+            referencedColumns: ["id"]
           }
         ]
       }
@@ -178,6 +214,8 @@ export interface Database {
       GetContactsWithProfiles: {
         Row: {
           friend: string | null
+          id: string | null
+          ownerId: string | null
           pictureUrl: string | null
           savedName: string | null
           unseenMessages: number | null
@@ -189,11 +227,36 @@ export interface Database {
             columns: ["friend"]
             referencedRelation: "Friend"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "Contact_ownerId_fkey"
+            columns: ["ownerId"]
+            referencedRelation: "User"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "Contact_ownerId_fkey"
+            columns: ["ownerId"]
+            referencedRelation: "GetContactsWithProfiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "User_id_fkey"
+            columns: ["id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
           }
         ]
       }
     }
     Functions: {
+      create_new_friend_contact: {
+        Args: {
+          friend_id: string
+          contact_name: string
+        }
+        Returns: undefined
+      }
       is_blocked: {
         Args: {
           blockerid: string
