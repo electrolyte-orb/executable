@@ -1,20 +1,86 @@
 "use client";
 import * as Form from "@radix-ui/react-form";
-import { Dispatch, FormEvent, SetStateAction } from "react";
-import { contactsFields } from "./AddContact";
+import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import { Button } from "@/components";
+import supabaseClient from "@/utils/supabase-client";
+import { useRouter } from "next/navigation";
 
 interface NewContactFormProps {
-  handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
-  contactsFields: contactsFields;
-  setContactsFields: Dispatch<SetStateAction<contactsFields>>;
+  closePrompt: () => void;
 }
 
-export default function NewContactForm({
-  handleSubmit,
-  contactsFields,
-  setContactsFields,
-}: NewContactFormProps) {
+interface contactsFields {
+  contactName: null | string;
+  userId: null | string;
+}
+
+export default function NewContactForm({ closePrompt }: NewContactFormProps) {
+  const [contactFields, setContactFields] = useState<contactsFields>({
+    contactName: null,
+    userId: null,
+  });
+
+  const supabase = supabaseClient();
+  const router = useRouter();
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    const { data: userSession, error: authError } =
+      await supabase.auth.getSession();
+
+    if (authError) {
+      console.error(authError);
+      return;
+    }
+
+    e.preventDefault();
+    const UUIDRegex =
+      /[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}/i;
+
+    if (
+      !(
+        contactFields.contactName &&
+        contactFields.contactName.length >= 3 &&
+        contactFields.contactName.length <= 30 &&
+        contactFields.userId &&
+        removeDashes(contactFields.userId).length === 32 &&
+        UUIDRegex.test(removeDashes(contactFields.userId))
+      )
+    ) {
+      console.error("[INPUT ERROR] values wont satisfy");
+      return;
+    }
+
+    console.log(userSession.session?.user.id);
+    const { data: friend, error: friendInsertError } = await supabase
+      .from("Friend")
+      .insert({
+        friendId: contactFields.userId,
+        ownerId: userSession.session?.user.id ?? "",
+      })
+      .select();
+
+    if (friendInsertError) {
+      console.error("[can't insert friend]", friendInsertError);
+      return;
+    }
+
+    const { error: contactInsertError } = await supabase
+      .from("Contact")
+      .insert({
+        ownerId: userSession.session?.user.id ?? "",
+        friend: friend[0].id,
+        savedName: contactFields.contactName,
+      });
+
+    if (contactInsertError) {
+      console.error("[contact insert error]", contactInsertError);
+      return;
+    }
+
+    closePrompt();
+    router.refresh();
+  }
+
   return (
     <Form.Root onSubmit={handleSubmit}>
       <Form.Field name="contactName">
@@ -26,9 +92,9 @@ export default function NewContactForm({
             placeholder="Name"
             minLength={3}
             maxLength={30}
-            value={contactsFields.contactName ?? ""}
+            value={contactFields.contactName ?? ""}
             onChange={(e) =>
-              setContactsFields((state) => {
+              setContactFields((state) => {
                 const newState = { ...state };
                 newState.contactName = e.target.value;
                 return newState;
@@ -50,11 +116,11 @@ export default function NewContactForm({
         <Form.Label className="block">Executable ID</Form.Label>
         <Form.Control asChild>
           <input
-            value={contactsFields.userId ?? ""}
+            value={contactFields.userId ?? ""}
             maxLength={36}
             pattern="[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}"
             onChange={(e) =>
-              setContactsFields((state) => {
+              setContactFields((state) => {
                 const newState = { ...state };
                 newState.userId = separateWithDashes(e.target.value);
                 return newState;
@@ -76,9 +142,12 @@ export default function NewContactForm({
     </Form.Root>
   );
 }
+function removeDashes(text: string): string {
+  return text.split("-").join("");
+}
 
 function separateWithDashes(text: string): string {
-  let textWithoutDashes = text.split("-").join("");
+  let textWithoutDashes = removeDashes(text);
   let dashedString = "";
 
   for (let i = 0; i < textWithoutDashes.length; i++) {

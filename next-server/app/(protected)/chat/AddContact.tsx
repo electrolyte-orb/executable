@@ -2,35 +2,28 @@
 import { Button } from "@/components";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Plus, Cancel, ArrowLeft } from "iconoir-react";
-import { FormEvent, useState } from "react";
-import supabaseClient from "@/utils/supabase-client";
+import { useState } from "react";
 import NewContactForm from "./NewContactForm";
 
-export interface contactsFields {
-  contactName: null | string;
-  userId: null | string;
-}
-
 export default function AddContact() {
-  const supabase = supabaseClient();
-  const PROMPT_NOT_INITIATED = 0;
-  const ADD_NEW_FRIEND = 1;
-  const ADD_EXISTING_FRIEND = 2;
+  const PROMPT_NOT_OPEN = 0;
+  const PROMPT_NOT_INITIATED = 1;
+  const ADD_NEW_FRIEND = 2;
+  const ADD_EXISTING_FRIEND = 3;
 
-  const [contactPrompt, setContactPrompt] = useState(PROMPT_NOT_INITIATED);
-  const [contactsFields, setContactFields] = useState<contactsFields>({
-    contactName: null,
-    userId: null,
-  });
-
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    alert("Form Submitted...");
+  const [contactPrompt, setContactPrompt] = useState<number>(PROMPT_NOT_OPEN);
+  function closePrompt() {
+    setContactPrompt(PROMPT_NOT_OPEN);
   }
 
   return (
     <Dialog.Root
-      onOpenChange={(open) => !open && setContactPrompt(PROMPT_NOT_INITIATED)}
+      onOpenChange={(isOpen) =>
+        isOpen
+          ? setContactPrompt(PROMPT_NOT_INITIATED)
+          : setContactPrompt(PROMPT_NOT_OPEN)
+      }
+      open={contactPrompt > PROMPT_NOT_OPEN}
     >
       <Dialog.Trigger asChild>
         <button
@@ -86,11 +79,7 @@ export default function AddContact() {
                   Go Back
                 </Button>
                 <h1>Add New Friend</h1>
-                <NewContactForm
-                  handleSubmit={handleSubmit}
-                  contactsFields={contactsFields}
-                  setContactsFields={setContactFields}
-                />
+                <NewContactForm closePrompt={closePrompt} />
               </>
             )}
             {contactPrompt === ADD_EXISTING_FRIEND && (
